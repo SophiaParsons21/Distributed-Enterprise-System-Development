@@ -1,0 +1,19 @@
+Initial Product Backlog
+- Producer logs into the system to manage the products
+- Producer creates a new product listing for customers
+- Producer can enter product details (name, description, category, price, available quantity, availability period, farm origin)
+- Producer can provide optional product info (harvest date, allergens, best-before date)
+- Producer needs the system to validate required fields so incomplete listings can't be published
+- Producer wants validation error messages
+- Producer can declare a product as organically certified so customers can see
+- System verifies organic cerifications through an external service
+- Producer wants to be notified when verification fails so information can be corrected
+- System handles external service failures so submissions aren't lost
+- System publishes validated products automatically so customers can view
+- Customer can see published products only once validation checks have passed
+- Producer can update stock quantities so inventory is accurate
+- Producer can update seasonal availability dates 
+- System needs products to become unavailable when stock reaches 0 so customers can't order them
+- System makes products available again when stock is resupplied
+- Producer can view the current status of products (available, out of stock, pending verification)
+- System can log validation and verification failures for troubleshooting
