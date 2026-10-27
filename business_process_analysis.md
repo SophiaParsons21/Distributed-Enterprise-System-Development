@@ -1,4 +1,4 @@
-# Use Case 1: Analysis of Major Business Processes and Organisational Responsibilities
+# Analysis of Major Business Processes and Organisational Responsibilities
 
 ## 1. System Overview & Scope
 
