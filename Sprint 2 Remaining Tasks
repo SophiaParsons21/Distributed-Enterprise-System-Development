@@ -1,0 +1,19 @@
+At the end of Sprint 2, I have assessed which tasks or changes need to be implemented at the start of Sprint 3
+
+- Add Compliance Officer Manual Review Task to Product Registration BPMN
+The product-registration BPMN currently records PENDING_VERIFICATION and notifies the producer, but does not create the manual review task required after repeated certification-service failures.
+Add a retry policy, then route unresolved cases to a Compliance Officer user task with outcomes such as approve, reject, or request correction.
+This corresponds to FR-A12 and traceability item TR-04.
+
+- Add scheduled Seasonal Availability Check
+Inventory Management checks seasonal availability only when the producer submits an update.
+Add a timer-started daily process that evaluates current dates and changes products to OUT_OF_SEASON or back to available when appropriate.
+This addresses FR-B08 and traceability item TR-08.
+
+- Provide editable I* Model source files
+*Sprint_2_I_Star_Models.md lists strategic_dependency_model_refined.drawio and strategic_rationale_model_refined.drawio as deliverables, but the repository currently contains only SD_MODEL.svg and SR_MODEL.svg.
+Export or commit the editable Draw.io files.
+
+- Confirm Implementation-Level evidence where required by brief
+The traceability document says actual catalogue indexing, status visibility, and event logging are not demonstrated by the diagrams alone.
+If Sprint 2 requires executable or tested Camunda evidence, those behaviours still need implementation and demonstration; otherwise they should be treated as Sprint 3 work.
