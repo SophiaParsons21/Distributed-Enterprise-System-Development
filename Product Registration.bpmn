@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="1921008" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.10.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="1921008" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
   <bpmn:collaboration id="Collaboration_0zp4qyw" name="Product Registration">
     <bpmn:participant id="Participant_0oki0eu" name="Marketplace Product Listing Process" processRef="Process_0moi5o3" />
     <bpmn:participant id="Participant_144tysd" name="Organic Certification Service" processRef="Process_06y3by0" />
@@ -16,22 +16,25 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_05rs8g8" name="Marketplace System">
         <bpmn:flowNodeRef>Activity_1vda5is</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_17euk4s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1058w5z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1pck7oj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0vurh5t</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fyfj8m</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1x8qlse</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0dmhuls</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_14obebb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_06055s9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0jbvl7c</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_17euk4s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06055s9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fyfj8m</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="Product Listing Requested">
       <bpmn:outgoing>Flow_0wmijih</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1vda5is" name="Verify Organic Certification">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="verify-certification" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jhmkyl</bpmn:incoming>
       <bpmn:incoming>Flow_10bdzzs</bpmn:incoming>
       <bpmn:outgoing>Flow_1mygas1</bpmn:outgoing>
@@ -39,6 +42,7 @@
     <bpmn:userTask id="Activity_1s8l31h" name="Correct Product Information">
       <bpmn:extensionElements>
         <zeebe:userTask />
+        <zeebe:formDefinition formId="Form_9wsjj3w" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11jwnv6</bpmn:incoming>
       <bpmn:outgoing>Flow_0u28z7s</bpmn:outgoing>
@@ -46,15 +50,14 @@
     <bpmn:userTask id="Activity_0zax1ci" name="Submit Product Information">
       <bpmn:extensionElements>
         <zeebe:userTask />
+        <zeebe:formDefinition formId="Form_1jj2m3p" />
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#34;organicClaimed&#34;:true,&#34;productName&#34;:&#34;Heritage Tomatoes&#34;,&#34;description&#34;:&#34;Freshly harvested carrots&#34;,&#34;category&#34;:null,&#34;price&#34;:3.5,&#34;quantity&#34;:40,&#34;availableFrom&#34;:&#34;2026-11-01&#34;,&#34;availableUntil&#34;:&#34;2026-12-31&#34;,&#34;farmOrigin&#34;:&#34;Somerset&#34;,&#34;harvestDate&#34;:null,&#34;bestBefore&#34;:null,&#34;allergens&#34;:&#34;&#34;,&#34;certificationNumber&#34;:&#34;ORG-12345&#34;}" />
+        </zeebe:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0wmijih</bpmn:incoming>
       <bpmn:outgoing>Flow_1ejaxsf</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_17euk4s" name="Validate Product Information">
-      <bpmn:incoming>Flow_1ejaxsf</bpmn:incoming>
-      <bpmn:incoming>Flow_0u28z7s</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cbk66j</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1058w5z" name="Product Details Valid?">
       <bpmn:incoming>Flow_0cbk66j</bpmn:incoming>
       <bpmn:outgoing>Flow_05z4d5b</bpmn:outgoing>
@@ -63,22 +66,21 @@
     <bpmn:userTask id="Activity_0h9neew" name="Correct Certification Details">
       <bpmn:extensionElements>
         <zeebe:userTask />
+        <zeebe:formDefinition formId="Form_1el9ivm" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_053i3p0</bpmn:incoming>
       <bpmn:outgoing>Flow_10bdzzs</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1pck7oj" name="Notify Producer of Verification Delay">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="notify-producer" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1xudpxl</bpmn:incoming>
       <bpmn:outgoing>Flow_0x70zv3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0vurh5t" name="Verification Pending">
       <bpmn:incoming>Flow_0x70zv3</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_0fyfj8m" name="Publish Product">
-      <bpmn:incoming>Flow_00tkuiz</bpmn:incoming>
-      <bpmn:incoming>Flow_020oi42</bpmn:incoming>
-      <bpmn:outgoing>Flow_02pkh0p</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1x8qlse" name="Product Published">
       <bpmn:incoming>Flow_02pkh0p</bpmn:incoming>
     </bpmn:endEvent>
@@ -92,13 +94,9 @@
       <bpmn:outgoing>Flow_020oi42</bpmn:outgoing>
       <bpmn:outgoing>Flow_053i3p0</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_06055s9" name="Record Pending Verification">
-      <bpmn:incoming>Flow_01cayte</bpmn:incoming>
-      <bpmn:outgoing>Flow_1xudpxl</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:boundaryEvent id="Event_0jbvl7c" attachedToRef="Activity_1vda5is">
       <bpmn:outgoing>Flow_01cayte</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_1xbvfh6" />
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1xbvfh6" errorRef="Error_1n83990" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0wmijih" sourceRef="StartEvent_1" targetRef="Activity_0zax1ci" />
     <bpmn:sequenceFlow id="Flow_1jhmkyl" name="Yes" sourceRef="Gateway_0dmhuls" targetRef="Activity_1vda5is">
@@ -128,8 +126,32 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_02pkh0p" sourceRef="Activity_0fyfj8m" targetRef="Event_1x8qlse" />
     <bpmn:sequenceFlow id="Flow_01cayte" sourceRef="Event_0jbvl7c" targetRef="Activity_06055s9" />
+    <bpmn:scriptTask id="Activity_17euk4s" name="Validate Product Information">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=price &#62; 0 and quantity &#62;= 0 and date(availableUntil) &#62;= date(availableFrom) and (organicClaimed = false or certificationNumber != null)" resultVariable="productValid" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u28z7s</bpmn:incoming>
+      <bpmn:incoming>Flow_1ejaxsf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cbk66j</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_06055s9" name="Record Pending Verification">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;PENDING_VERIFICATION&#34;" resultVariable="productStatus" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01cayte</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xudpxl</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0fyfj8m" name="Publish Product">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;PUBLISHED&#34;" resultVariable="productStatus" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00tkuiz</bpmn:incoming>
+      <bpmn:incoming>Flow_020oi42</bpmn:incoming>
+      <bpmn:outgoing>Flow_02pkh0p</bpmn:outgoing>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmn:process id="Process_06y3by0" isExecutable="false" />
+  <bpmn:error id="Error_1n83990" name="Verification Unavailable" errorCode="VERIFICATION_UNAVAILABLE" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0zp4qyw">
       <bpmndi:BPMNShape id="Participant_0oki0eu_di" bpmnElement="Participant_0oki0eu" isHorizontal="true">
@@ -162,10 +184,6 @@
         <dc:Bounds x="330" y="150" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1csbago_di" bpmnElement="Activity_17euk4s">
-        <dc:Bounds x="330" y="400" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_12ye2ud_di" bpmnElement="Gateway_1058w5z" isMarkerVisible="true">
         <dc:Bounds x="575" y="415" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -185,10 +203,6 @@
           <dc:Bounds x="1106" y="625" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0umhckp_di" bpmnElement="Activity_0fyfj8m">
-        <dc:Bounds x="1290" y="420" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1x8qlse_di" bpmnElement="Event_1x8qlse">
         <dc:Bounds x="1452" y="442" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -207,9 +221,14 @@
           <dc:Bounds x="1182" y="366.5" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0c7zj3j_di" bpmnElement="Activity_06055s9">
+      <bpmndi:BPMNShape id="Activity_0q50r53_di" bpmnElement="Activity_17euk4s">
+        <dc:Bounds x="330" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vnlzk0_di" bpmnElement="Activity_06055s9">
         <dc:Bounds x="990" y="360" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jedmfc_di" bpmnElement="Activity_0fyfj8m">
+        <dc:Bounds x="1290" y="420" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1fibtcj_di" bpmnElement="Event_0jbvl7c">
         <dc:Bounds x="902" y="382" width="36" height="36" />
